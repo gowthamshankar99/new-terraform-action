@@ -16,8 +16,8 @@ inputs:
 
   cosign-version:
     description: Specify cosign version or "installed" to perform scan. Leave blank to skip.
-    required: false
-    default: ""
+    required: true
+    default: "v2.2.0"
 
   terraform-version:
     description: Specify terraform version or "installed" to perform scan. Leave blank to skip.
@@ -69,15 +69,9 @@ runs:
   
   steps:
     - name: install cosign 
-      if: inputs.cosign-version != ""
       uses: sigstore/cosign-installer@main
       with:
         cosign-release: v${{ inputs.cosign-version }}
-
-    - name: install cosign with default version
-      if: inputs.cosign-version == ""
-      uses: sigstore/cosign-installer@main
-      
 
     - name: install terraform
       working-directory: ${{ inputs.working-directory }}
