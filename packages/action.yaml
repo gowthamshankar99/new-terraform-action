@@ -69,9 +69,15 @@ runs:
   
   steps:
     - name: install cosign 
+      if: inputs.cosign-version != ""
       uses: sigstore/cosign-installer@main
       with:
         cosign-release: v${{ inputs.cosign-version }}
+
+    - name: install cosign with default version
+      if: inputs.cosign-version == ""
+      uses: sigstore/cosign-installer@main
+      
 
     - name: install terraform
       working-directory: ${{ inputs.working-directory }}
